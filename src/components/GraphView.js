@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Graph from 'react-graph-vis'
 import { useApp } from '../AppContext'
 
+
 export default function GraphView({ PackagesList, ClientsList, EdgesList }) {
 
   const graph = {
@@ -12,13 +13,12 @@ export default function GraphView({ PackagesList, ClientsList, EdgesList }) {
 
   const options = {
     layout: {
-      hierarchical: false
+      hierarchical: true
     },
     interaction: {
       navigationButtons: true,
     },
     nodes: {
-      shape: 'box',
     },
     edges: {
       color: "gray",
