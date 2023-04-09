@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
 
 const AppContext = React.createContext()
 
@@ -57,7 +58,7 @@ export default function AppContextProvider({ children }) {
                     id: "205",
                     name: "cors",
                     version: "2.8.5"
-                }
+                },
             ],
         },
         {
@@ -129,9 +130,27 @@ export default function AppContextProvider({ children }) {
         },
     ]
 
+    const [clickedPKG, setClickedPKG] = useState({
+        name: null,
+        id: null,
+        version: null
+    })
+
+    const getRepoDep = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/git/json/");
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const value = {
         mockData,
         mockPKG,
+        clickedPKG,
+        setClickedPKG,
+        getRepoDep
     }
 
     return (

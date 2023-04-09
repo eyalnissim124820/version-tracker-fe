@@ -4,20 +4,25 @@ import { useApp } from './AppContext';
 import GraphView from './components/GraphView';
 import Mac from './attch/mac.svg';
 import PKG from './attch/box.svg'
+import TopBar from './components/TopBar';
 
 function App() {
 
-  const { mockData, print, mockPKG } = useApp()
+  const { mockData, mockPKG, getRepoDep } = useApp()
 
   const [clients, setClients] = useState([
     ...mockData.map((client, index) => {
-      return ({ id: client.id, label: `${client.name} (${client.client_version})`, title: `IP: ${client.ip}`, color: '#F07373', physics: false, shape: 'image', image: Mac, size: 50 })
+      return ({
+        id: client.id, label: `${client.name} (${client.client_version})`,
+        title: `IP: ${client.ip}`, color: '#F07373', physics: false, shape: 'image',
+        image: Mac, size: 50
+      })
     })
   ])
 
   const [packges, setPackages] = useState([
     ...mockPKG.map((pkg, index) => {
-      return ({ id: pkg.id, label: `${pkg.name} (${pkg.version})`, shape: 'image', image: PKG ,})
+      return ({ id: pkg.id, label: `${pkg.name} (${pkg.version})`, shape: 'image', image: PKG, })
     })
   ])
 
@@ -33,8 +38,14 @@ function App() {
     ).filter(Boolean)
   );
 
+  useEffect(() => {
+    getRepoDep()
+  }, [])
+
+
   return (
     <div className="App">
+      <TopBar />
       <GraphView PackagesList={packges} ClientsList={clients} EdgesList={edges} />
     </div>
   );
