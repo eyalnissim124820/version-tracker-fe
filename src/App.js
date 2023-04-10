@@ -9,9 +9,8 @@ import TopBar from './components/TopBar';
 function App() {
 
   const { mockData, mockPKG, getRepoDep } = useApp()
-
   const [clients, setClients] = useState([
-    ...mockData.map((client, index) => {
+    ...mockData?.map((client, index) => {
       return ({
         id: client.id, label: `${client.name} (${client.client_version})`,
         title: `IP: ${client.ip}`, color: '#F07373', physics: false, shape: 'image',
@@ -21,13 +20,13 @@ function App() {
   ])
 
   const [packges, setPackages] = useState([
-    ...mockPKG.map((pkg, index) => {
+    ...mockPKG?.map((pkg, index) => {
       return ({ id: pkg.id, label: `${pkg.name} (${pkg.version})`, shape: 'image', image: PKG, })
     })
   ])
 
   const [edges, setEdges] = useState(
-    mockData.flatMap((client) =>
+    mockData?.flatMap((client) =>
       client?.dependencies?.map((dep) => {
         const targetPkg = mockPKG.find((pkg) => pkg.id === dep?.id);
         if (targetPkg) {
@@ -37,11 +36,6 @@ function App() {
       })
     ).filter(Boolean)
   );
-
-  useEffect(() => {
-    getRepoDep()
-  }, [])
-
 
   return (
     <div className="App">

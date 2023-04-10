@@ -17,17 +17,17 @@ export default function AppContextProvider({ children }) {
             client_version: '3.0.0',
             dependencies: [
                 {
-                    id: "200",
+                    id: 0,
                     name: "react",
                     version: "2.1.2"
                 },
                 {
-                    id: "201",
+                    id: 1,
                     name: "axios",
                     version: "1.3.4"
                 },
                 {
-                    id: "202",
+                    id: 2,
                     name: "designpkg",
                     version: "2.8.5"
                 }
@@ -40,22 +40,22 @@ export default function AppContextProvider({ children }) {
             client_version: '2.0.0',
             dependencies: [
                 {
-                    id: "203",
+                    id: 3,
                     name: "atob",
                     version: "2.1.2"
                 },
                 {
-                    id: "201",
+                    id: 1,
                     name: "axios",
                     version: "1.3.4"
                 },
                 {
-                    id: "200",
+                    id: 0,
                     name: "react",
                     version: "2.1.2"
                 },
                 {
-                    id: "205",
+                    id: 5,
                     name: "cors",
                     version: "2.8.5"
                 },
@@ -91,44 +91,46 @@ export default function AppContextProvider({ children }) {
         },
     ]
 
-    const mockPKG = [
-        {
-            id: "200",
-            name: "react",
-            version: "2.8.5"
-        },
-        {
-            id: "201",
-            name: "axios",
-            version: "1.3.4",
-            url: "https://github.com/axios/axios"
-        },
-        {
-            id: "202",
-            name: "designpkg",
-            version: "2.8.5"
-        },
-        {
-            id: "203",
-            name: "atob",
-            version: "2.1.2"
-        },
-        {
-            id: "204",
-            name: "@react-router",
-            version: "2.8.5"
-        },
-        {
-            id: "205",
-            name: "cors",
-            version: "2.8.5"
-        },
-        {
-            id: "206",
-            name: "regex",
-            version: "2.1.2"
-        },
-    ]
+    // const mockPKG = [
+    //     {
+    //         id: "200",
+    //         name: "react",
+    //         version: "2.8.5"
+    //     },
+    //     {
+    //         id: "201",
+    //         name: "axios",
+    //         version: "1.3.4",
+    //         url: "https://github.com/axios/axios"
+    //     },
+    //     {
+    //         id: "202",
+    //         name: "designpkg",
+    //         version: "2.8.5"
+    //     },
+    //     {
+    //         id: "203",
+    //         name: "atob",
+    //         version: "2.1.2"
+    //     },
+    //     {
+    //         id: "204",
+    //         name: "@react-router",
+    //         version: "2.8.5"
+    //     },
+    //     {
+    //         id: "205",
+    //         name: "cors",
+    //         version: "2.8.5"
+    //     },
+    //     {
+    //         id: "206",
+    //         name: "regex",
+    //         version: "2.1.2"
+    //     },
+    // ]
+
+    const [mockPKG, setMockPKG] = useState([])
 
     const [clickedPKG, setClickedPKG] = useState({
         name: null,
@@ -139,7 +141,11 @@ export default function AppContextProvider({ children }) {
     const getRepoDep = async () => {
         try {
             const res = await axios.get("http://localhost:8080/git/json/");
-            console.log(res.data);
+            const setIDs = res.data.map((element, id) => {
+                return { id, ...element }
+            });
+            setMockPKG(setIDs)
+            console.log(mockPKG);
         } catch (error) {
             console.log(error);
         }
